@@ -53,8 +53,6 @@ def organize_files(directory):
             os.makedirs(folder_path)
             folders_created.add(folder_name)
 
-        print(f"Processing '{filename}'...")
-
         # Build the final destination path
         destination = os.path.join(folder_path, filename)
         
