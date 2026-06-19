@@ -63,10 +63,18 @@ def organize_files(directory):
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
 
-        # Move the file
+        # Handle filename collisions
+        base_name, extension = os.path.splitext(filename)
         destination = os.path.join(folder_path, filename)
+        counter = 1
+        while os.path.exists(destination):
+            new_filename = f"{base_name} ({counter}){extension}"
+            destination = os.path.join(folder_path, new_filename)
+            counter += 1
+
+        # Move the file
         shutil.move(file_path, destination)
-        logging.info(f"Moved: {filename} -> {folder_name}/")
+        logging.info(f"Moved: {filename} -> {os.path.relpath(destination, directory)}")
         files_moved += 1
         
     logging.info(f"Organization complete! Total files moved: {files_moved}")
