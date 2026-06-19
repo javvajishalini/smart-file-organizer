@@ -16,14 +16,31 @@ def organize_files(directory):
         logging.error(f"The directory '{directory}' does not exist.")
         return
 
-    # Basic mapping of extensions to folder names
+    # Extended mapping of extensions to folder names
     extensions_map = {
         '.txt': 'TextFiles',
         '.pdf': 'Documents',
+        '.doc': 'Documents',
+        '.docx': 'Documents',
+        '.xls': 'Spreadsheets',
+        '.xlsx': 'Spreadsheets',
+        '.csv': 'Spreadsheets',
         '.jpg': 'Images',
+        '.jpeg': 'Images',
         '.png': 'Images',
+        '.gif': 'Images',
         '.mp4': 'Videos',
-        '.mp3': 'Audio'
+        '.mkv': 'Videos',
+        '.mp3': 'Audio',
+        '.wav': 'Audio',
+        '.zip': 'Archives',
+        '.rar': 'Archives',
+        '.tar': 'Archives',
+        '.gz': 'Archives',
+        '.py': 'CodeFiles',
+        '.js': 'CodeFiles',
+        '.html': 'CodeFiles',
+        '.css': 'CodeFiles'
     }
 
     files_moved = 0
