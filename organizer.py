@@ -66,9 +66,12 @@ def organize_files(directory):
             counter += 1
 
         # Move the file into the new folder
-        shutil.move(file_path, destination)
-        print(f"Moved: {filename} -> {folder_name}")
-        files_moved += 1
+        try:
+            shutil.move(file_path, destination)
+            print(f"Moved: {filename} -> {folder_name}")
+            files_moved += 1
+        except Exception as e:
+            print(f"Error moving {filename}: {e}")
         
     print(f"\nAll done! Successfully moved {files_moved} files into {len(folders_created)} new folders.")
 
