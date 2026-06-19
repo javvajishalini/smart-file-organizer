@@ -75,6 +75,23 @@ def organize_files(directory):
         
     print(f"\nAll done! Successfully moved {files_moved} files into {len(folders_created)} new folders.")
 
+    # Optional feature: clean up empty folders
+    remove_empty_folders(directory)
+
+def remove_empty_folders(directory):
+    empty_folders_deleted = 0
+    # Walk through the directory from bottom to top
+    for dirpath, dirnames, filenames in os.walk(directory, topdown=False):
+        if not os.listdir(dirpath): # If the folder is empty
+            try:
+                os.rmdir(dirpath)
+                empty_folders_deleted += 1
+            except Exception as e:
+                pass
+    
+    if empty_folders_deleted > 0:
+        print(f"Cleaned up {empty_folders_deleted} empty folders.")
+
 if __name__ == "__main__":
     print("=== Smart File Organizer ===")
     
