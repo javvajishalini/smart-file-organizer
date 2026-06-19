@@ -26,6 +26,7 @@ def organize_files(directory):
     }
 
     files_moved = 0
+    folders_created = set()
     
     # Loop through every file in the directory
     for filename in os.listdir(directory):
@@ -50,6 +51,7 @@ def organize_files(directory):
         # Create the folder if it's not already there
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
+            folders_created.add(folder_name)
 
         print(f"Processing '{filename}'...")
 
@@ -68,7 +70,7 @@ def organize_files(directory):
         print(f"Moved: {filename} -> {folder_name}")
         files_moved += 1
         
-    print(f"\nAll done! Successfully moved {files_moved} files.")
+    print(f"\nAll done! Successfully moved {files_moved} files into {len(folders_created)} new folders.")
 
 if __name__ == "__main__":
     print("=== Smart File Organizer ===")
