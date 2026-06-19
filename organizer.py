@@ -1,22 +1,13 @@
 import os
 import shutil
-import argparse
-import logging
-
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S"
-)
 
 def organize_files(directory):
-    """Organizes files in the given directory based on their extensions."""
+    # Check if the folder exists
     if not os.path.exists(directory):
-        logging.error(f"The directory '{directory}' does not exist.")
+        print("Error: The folder you entered does not exist.")
         return
 
-    # Extended mapping of extensions to folder names
+    # A simple dictionary to map file extensions to folder names
     extensions_map = {
         '.txt': 'TextFiles',
         '.pdf': 'Documents',
@@ -26,68 +17,56 @@ def organize_files(directory):
         '.xlsx': 'Spreadsheets',
         '.csv': 'Spreadsheets',
         '.jpg': 'Images',
-        '.jpeg': 'Images',
         '.png': 'Images',
-        '.gif': 'Images',
         '.mp4': 'Videos',
-        '.mkv': 'Videos',
         '.mp3': 'Audio',
-        '.wav': 'Audio',
-        '.zip': 'Archives',
-        '.rar': 'Archives',
-        '.tar': 'Archives',
-        '.gz': 'Archives',
-        '.py': 'CodeFiles',
-        '.js': 'CodeFiles',
-        '.html': 'CodeFiles',
-        '.css': 'CodeFiles'
+        '.zip': 'Archives'
     }
 
     files_moved = 0
+    
+    # Loop through every file in the directory
     for filename in os.listdir(directory):
         file_path = os.path.join(directory, filename)
         
-        # Skip directories
+        # We only want to organize files, not folders
         if os.path.isdir(file_path):
             continue
 
-        # Get file extension
-        _, ext = os.path.splitext(filename)
+        # Get the file's extension (like .txt, .jpg)
+        name, ext = os.path.splitext(filename)
         ext = ext.lower()
 
-        # Find the folder name for the extension, or use 'Others'
-        folder_name = extensions_map.get(ext, 'Others')
+        # Decide which folder the file belongs to, default to 'Others'
+        if ext in extensions_map:
+            folder_name = extensions_map[ext]
+        else:
+            folder_name = 'Others'
+            
         folder_path = os.path.join(directory, folder_name)
 
-        # Create the folder if it doesn't exist
+        # Create the folder if it's not already there
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
 
-        # Handle filename collisions
-        base_name, extension = os.path.splitext(filename)
+        # Build the final destination path
         destination = os.path.join(folder_path, filename)
+        
+        # If a file with the exact same name already exists in the folder, change the name slightly
         counter = 1
         while os.path.exists(destination):
-            new_filename = f"{base_name} ({counter}){extension}"
+            new_filename = f"{name}_{counter}{ext}"
             destination = os.path.join(folder_path, new_filename)
             counter += 1
 
-        # Move the file
+        # Move the file into the new folder
         shutil.move(file_path, destination)
-        logging.info(f"Moved: {filename} -> {os.path.relpath(destination, directory)}")
+        print(f"Moved: {filename} -> {folder_name}")
         files_moved += 1
         
-    logging.info(f"Organization complete! Total files moved: {files_moved}")
+    print(f"\nAll done! Successfully moved {files_moved} files.")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Smart File Organizer: Sort files into folders by extension.")
-    parser.add_argument("directory", nargs="?", help="Path to the directory to organize")
-    
-    args = parser.parse_args()
-    
-    if args.directory:
-        target_directory = args.directory
-    else:
-        target_directory = input("Enter the path of the directory to organize: ")
-        
-    organize_files(target_directory)
+    print("=== Smart File Organizer ===")
+    target_dir = input("Enter the path of the folder you want to organize: ")
+    organize_files(target_dir)
