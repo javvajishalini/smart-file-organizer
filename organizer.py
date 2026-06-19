@@ -1,5 +1,7 @@
 import os
 import shutil
+import tkinter as tk
+from tkinter import filedialog
 
 def organize_files(directory):
     # Check if the folder exists
@@ -75,5 +77,17 @@ def organize_files(directory):
 
 if __name__ == "__main__":
     print("=== Smart File Organizer ===")
-    target_dir = input("Enter the path of the folder you want to organize: ")
-    organize_files(target_dir)
+    
+    # Set up a hidden basic window for the popup
+    root = tk.Tk()
+    root.withdraw() # Hide the main window
+    
+    # Ask the user to select a folder visually
+    print("Please select a folder from the popup window...")
+    target_dir = filedialog.askdirectory(title="Select Folder to Organize")
+    
+    if target_dir:
+        print(f"Organizing folder: {target_dir}")
+        organize_files(target_dir)
+    else:
+        print("No folder selected. Exiting...")
