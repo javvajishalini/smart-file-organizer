@@ -1,10 +1,19 @@
 import os
 import shutil
+import argparse
+import logging
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
+)
 
 def organize_files(directory):
     """Organizes files in the given directory based on their extensions."""
     if not os.path.exists(directory):
-        print(f"Error: The directory '{directory}' does not exist.")
+        logging.error(f"The directory '{directory}' does not exist.")
         return
 
     # Basic mapping of extensions to folder names
@@ -17,6 +26,7 @@ def organize_files(directory):
         '.mp3': 'Audio'
     }
 
+    files_moved = 0
     for filename in os.listdir(directory):
         file_path = os.path.join(directory, filename)
         
@@ -39,9 +49,20 @@ def organize_files(directory):
         # Move the file
         destination = os.path.join(folder_path, filename)
         shutil.move(file_path, destination)
-        print(f"Moved: {filename} -> {folder_name}/")
+        logging.info(f"Moved: {filename} -> {folder_name}/")
+        files_moved += 1
+        
+    logging.info(f"Organization complete! Total files moved: {files_moved}")
 
 if __name__ == "__main__":
-    target_directory = input("Enter the path of the directory to organize: ")
+    parser = argparse.ArgumentParser(description="Smart File Organizer: Sort files into folders by extension.")
+    parser.add_argument("directory", nargs="?", help="Path to the directory to organize")
+    
+    args = parser.parse_args()
+    
+    if args.directory:
+        target_directory = args.directory
+    else:
+        target_directory = input("Enter the path of the directory to organize: ")
+        
     organize_files(target_directory)
-    print("Organization complete!")
