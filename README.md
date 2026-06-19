@@ -16,3 +16,14 @@ Run the script using python:
 python organizer.py
 ```
 A popup window will appear asking you to select the directory you wish to organize. Select the folder, click OK, and the script will handle the rest!
+
+## Screenshots
+
+### Before Running
+![Before Organizer](screenshots/before.png)
+
+### Running the Script
+![Running Organizer](screenshots/running.png)
+
+### After Running
+![After Organizer](screenshots/after.png)
