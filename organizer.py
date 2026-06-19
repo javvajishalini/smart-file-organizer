@@ -51,6 +51,8 @@ def organize_files(directory):
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
 
+        print(f"Processing '{filename}'...")
+
         # Build the final destination path
         destination = os.path.join(folder_path, filename)
         
