@@ -13,6 +13,8 @@ def organize_files(directory):
         '.pdf': 'Documents',
         '.doc': 'Documents',
         '.docx': 'Documents',
+        '.ppt': 'Presentations',
+        '.pptx': 'Presentations',
         '.xls': 'Spreadsheets',
         '.xlsx': 'Spreadsheets',
         '.csv': 'Spreadsheets',
