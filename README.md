@@ -22,8 +22,5 @@ A popup window will appear asking you to select the directory you wish to organi
 ### Before Running
 ![Before Organizer](screenshots/before.png)
 
-### Running the Script
-![Running Organizer](screenshots/running.png)
-
 ### After Running
 ![After Organizer](screenshots/after.png)
